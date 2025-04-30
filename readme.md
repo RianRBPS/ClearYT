@@ -1,6 +1,6 @@
 # <img src="https://img.icons8.com/?size=100&id=TP1ER1fFiLZP&format=png&color=7950F2" width="25" height="25" alt="ClearYT Icon"> ClearYT – Focus Mode for YouTube
 
-**ClearYT** is a Chrome/Firefox browser extension designed to eliminate distractions from YouTube, making it easier to stay focused while studying or working.
+**ClearYT** is a Chrome browser extension designed to eliminate distractions from YouTube, making it easier to stay focused while studying or working.
 
 ![ClearYT Demo](demo.png)
 
