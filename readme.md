@@ -44,9 +44,8 @@ ClearYT/
 
 The extension uses this icon:
 
-<a target="_blank" href="https://icons8.com/icon/TP1ER1fFiLZP/youtube-studio">
-  <img src="https://img.icons8.com/fluency/48/youtube-studio.png" alt="YouTube Studio Icon" width="48" height="48">
-</a>  
+<img src="https://img.icons8.com/?size=100&id=TP1ER1fFiLZP&format=png&color=7950F2" width="48" height="48" alt="ClearYT Icon">
+
 Icon by [Icons8](https://icons8.com)
 
 ---
