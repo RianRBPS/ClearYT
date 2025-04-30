@@ -2,120 +2,17 @@
 <html>
 <head>
   <title>ClearYT</title>
-  <style>
-    body {
-      background-color: #121212;
-      color: #e0e0e0;
-      font-family: 'Segoe UI', sans-serif;
-      padding: 16px;
-      width: 270px;
-      overflow: hidden;
-    }
-
-    h2 {
-      color: #a855f7;
-      margin-top: 0;
-      font-size: 20px;
-      text-align: center;
-    }
-
-    h4 {
-      color: #cccccc;
-      font-size: 13px;
-      margin: 0 0 8px 0;
-      padding-left: 6px;
-      border-left: 3px solid #a855f7;
-    }
-
-    label {
-      display: flex;
-      align-items: center;
-      margin: 4px 0;
-      font-size: 13px;
-      padding: 6px;
-      border-radius: 6px;
-      transition: background-color 0.2s ease;
-    }
-
-    label:hover {
-      background-color: #1e1e1e;
-    }
-
-    input[type="checkbox"] {
-      accent-color: #a855f7;
-      width: 16px;
-      height: 16px;
-      margin-right: 10px;
-    }
-
-    .group {
-      margin-bottom: 14px;
-      padding: 12px;
-      border-radius: 12px;
-      background-color: #1b1b1b;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    }
-
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      background-color: #1e1e1e;
-      border-radius: 12px;
-      margin: 16px 0;
-    }
-
-    .pill-toggle {
-      position: relative;
-      width: 40px;
-      height: 22px;
-    }
-
-    .pill-toggle input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #555;
-      border-radius: 34px;
-      transition: 0.4s;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 16px;
-      width: 16px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      border-radius: 50%;
-      transition: 0.4s;
-    }
-
-    .pill-toggle input:checked + .slider {
-      background-color: #a855f7;
-    }
-
-    .pill-toggle input:checked + .slider:before {
-      transform: translateX(18px);
-    }
-  </style>
+  <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h2>ClearYT</h2>
+  <h2 style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+    <img src="https://img.icons8.com/?size=100&id=TP1ER1fFiLZP&format=png&color=7950F2" alt="ClearYT Logo" width="24" height="24">
+    ClearYT
+  </h2>
+  
 
   <label class="toggle-row">
-    <span>Always Use Dark Theme</span>
+    <span>Dark Theme</span>
     <div class="pill-toggle">
       <input type="checkbox" id="ytDarkMode">
       <span class="slider"></span>
@@ -133,10 +30,7 @@
     <h4>Video Page</h4>
     <label><input type="checkbox" id="sidebar"> Hide Suggested Videos</label>
     <label><input type="checkbox" id="comments"> Disable Comments</label>
-    
   </div>
-
-
 
   <div class="group">
     <h4>Interface Cleanup</h4>
