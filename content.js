@@ -17,12 +17,11 @@ function hideElements() {
   });
 }
 
-// Initial hide
-hideElements();
-
-// React to page changes (SPA)
-const observer = new MutationObserver(() => {
-  hideElements();
+// Only apply if user has focus mode enabled
+chrome.storage.sync.get(['enabled'], (result) => {
+  if (result.enabled !== false) {
+    hideElements();
+    const observer = new MutationObserver(hideElements);
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 });
-
-observer.observe(document.body, { childList: true, subtree: true });

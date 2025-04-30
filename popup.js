@@ -1,12 +1,11 @@
-document.getElementById('toggle').addEventListener('change', (e) => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.scripting.executeScript({
-      target: { tabId: tabs[0].id },
-      function: () => {
-        if (e.target.checked) {
-          location.reload(); // Refresh to apply
-        }
-      }
-    });
+// Load saved toggle state
+document.addEventListener('DOMContentLoaded', () => {
+  chrome.storage.sync.get(['enabled'], (result) => {
+    document.getElementById('toggle').checked = result.enabled !== false; // default true
   });
+});
+
+// Save toggle state on change
+document.getElementById('toggle').addEventListener('change', (e) => {
+  chrome.storage.sync.set({ enabled: e.target.checked });
 });
