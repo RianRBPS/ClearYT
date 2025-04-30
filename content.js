@@ -109,7 +109,7 @@ chrome.runtime.onMessage.addListener((message) => {
 });
 
 // Debounce utility
-function debounce(fn, delay = 150) {
+function debounce(fn, delay = 0) {
   let timeout;
   return () => {
     clearTimeout(timeout);
