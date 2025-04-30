@@ -8,28 +8,29 @@
       color: #e0e0e0;
       font-family: 'Segoe UI', sans-serif;
       padding: 16px;
-      width: 260px;
+      width: 270px;
+      overflow: hidden;
     }
 
     h2 {
       color: #a855f7;
       margin-top: 0;
-      font-size: 18px;
+      font-size: 20px;
       text-align: center;
     }
 
     h4 {
       color: #cccccc;
-      font-size: 14px;
-      margin: 16px 0 8px;
-      border-bottom: 1px solid #333;
-      padding-bottom: 4px;
+      font-size: 13px;
+      margin: 0 0 8px 0;
+      padding-left: 6px;
+      border-left: 3px solid #a855f7;
     }
 
     label {
       display: flex;
       align-items: center;
-      margin: 6px 0;
+      margin: 4px 0;
       font-size: 13px;
       padding: 6px;
       border-radius: 6px;
@@ -48,32 +49,99 @@
     }
 
     .group {
-      margin-bottom: 10px;
+      margin-bottom: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      background-color: #1b1b1b;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .pill-toggle {
+      position: relative;
+      width: 40px;
+      height: 22px;
+    }
+
+    .pill-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #555;
+      border-radius: 34px;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.4s;
+    }
+
+    .pill-toggle input:checked + .slider {
+      background-color: #a855f7;
+    }
+
+    .pill-toggle input:checked + .slider:before {
+      transform: translateX(18px);
     }
   </style>
 </head>
 <body>
   <h2>ClearYT</h2>
 
-  <label><input type="checkbox" id="ytDarkMode"> Force YouTube Dark Theme</label>
-
-  <div class="group">
-    <h4>Video Page</h4>
-    <label><input type="checkbox" class="individual-toggle" id="sidebar"> Hide Sidebar</label>
-    <label><input type="checkbox" class="individual-toggle" id="comments"> Hide Comments</label>
-    <label><input type="checkbox" class="individual-toggle" id="notifBell"> Hide Notification Bell</label>
-  </div>
+  <label class="toggle-row">
+    <span>Always Use Dark Theme</span>
+    <div class="pill-toggle">
+      <input type="checkbox" id="ytDarkMode">
+      <span class="slider"></span>
+    </div>
+  </label>
 
   <div class="group">
     <h4>Homepage</h4>
-    <label><input type="checkbox" class="individual-toggle" id="homepage"> Hide Homepage Grid</label>
-    <label><input type="checkbox" class="individual-toggle" id="chips"> Hide Topic Chips</label>
+    <label><input type="checkbox" id="shorts"> Remove Shorts Section</label>
+    <label><input type="checkbox" id="homepage"> Hide Video Feed</label>
+    <label><input type="checkbox" id="chips"> Hide Filter Buttons</label>
+  </div>
+  
+  <div class="group">
+    <h4>Watch Page</h4>
+    <label><input type="checkbox" id="sidebar"> Hide Suggested Videos</label>
+    <label><input type="checkbox" id="comments"> Disable Comments</label>
+    
   </div>
 
+
+
   <div class="group">
-    <h4>General</h4>
-    <label><input type="checkbox" class="individual-toggle" id="shorts"> Hide Shorts</label>
-    <label><input type="checkbox" class="individual-toggle" id="leftmenu"> Hide Left Menu</label>
+    <h4>Interface Cleanup</h4>
+    <label><input type="checkbox" id="leftmenu"> Collapse Left Navigation</label>
+    <label><input type="checkbox" id="notifBell"> Remove Notification Bell</label>
   </div>
 
   <script src="popup.js"></script>

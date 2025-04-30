@@ -1,0 +1,105 @@
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 16px;
+  width: 280px;
+  border-radius: 20px; /* rounded popup edge */
+}
+
+h2 {
+  color: #a855f7;
+  margin-top: 0;
+  font-size: 20px;
+  text-align: center;
+}
+
+h4 {
+  color: #cccccc;
+  font-size: 14px;
+  margin: 16px 0 8px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 4px;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+  font-size: 13px;
+  padding: 6px;
+  border-radius: 16px; /* softer checkbox row */
+  transition: background-color 0.2s ease;
+}
+
+label:hover {
+  background-color: #1e1e1e;
+}
+
+input[type="checkbox"] {
+  accent-color: #a855f7;
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.group {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 18px; /* rounder group cards */
+  background-color: #1e1e1e;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background-color: #1e1e1e;
+  border-radius: 18px; /* rounder top toggle */
+  margin-bottom: 16px;
+}
+
+.pill-toggle {
+  position: relative;
+  width: 42px;
+  height: 24px;
+}
+
+.pill-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #555;
+  border-radius: 50px; /* more pill-like */
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+.pill-toggle input:checked + .slider {
+  background-color: #a855f7;
+}
+
+.pill-toggle input:checked + .slider:before {
+  transform: translateX(18px);
+}
