@@ -1,4 +1,4 @@
-# <img src="https://img.icons8.com/?size=100&id=TP1ER1fFiLZP&format=png&color=7950F2" width="48" height="48" alt="ClearYT Icon"> ClearYT – Focus Mode for YouTube
+# <img src="https://img.icons8.com/?size=100&id=TP1ER1fFiLZP&format=png&color=7950F2" width="24" height="24" alt="ClearYT Icon"> ClearYT – Focus Mode for YouTube
 
 
 
@@ -26,18 +26,6 @@
 2. Go to `chrome://extensions/` in your browser
 3. Enable **Developer mode**
 4. Click **Load unpacked** and select this folder
-
-## 📁 Folder Structure
-
-ClearYT/
-├── manifest.json         # Required: declares the extension
-├── popup.html            # The extension popup UI
-├── popup.js              # Controls logic for popup.html
-├── content.js            # Runs in YouTube tabs, hides elements
-├── icon16.png            # 16x16 icon for toolbar
-├── icon48.png            # 48x48 icon for extension listings
-├── icon128.png           # 128x128 icon for Chrome Web Store
-└── README.md             # (Optional) Docs for GitHub
 
 
 ## 🖼️ Icon Attribution
