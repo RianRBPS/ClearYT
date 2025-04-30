@@ -4,7 +4,7 @@
   "description": "Hide distracting elements from YouTube while studying.",
   "version": "1.0",
   "permissions": ["storage", "scripting"],
-  "host_permissions": ["^://www.youtube.com/*"],
+  "host_permissions": ["*://www.youtube.com/*"],
   "content_scripts": [
     {
       "matches": ["*://www.youtube.com/*"],

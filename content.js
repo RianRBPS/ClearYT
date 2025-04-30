@@ -1,27 +1,25 @@
-const elementsToHide = [
-  '#related',                       // sidebar
-  'ytd-comments',                  // comments
-  '#secondary',                    // sidebar alt
-  '#chips-wrapper',               // filter chips
-  'ytd-rich-grid-renderer',        // home grid
-  'ytd-shorts-section-renderer',   // Shorts section
-  'ytd-guide-section-renderer',    // Explore/trending side menu
-  '.ytp-autonav-toggle-button'     // autoplay button
-];
+chrome.storage.sync.get(null, (prefs) => {
+  if (prefs.enabled === false) return;
 
-function hideElements() {
-  elementsToHide.forEach(selector => {
-    document.querySelectorAll(selector).forEach(el => {
-      el.style.display = 'none';
+  const elements = [];
+
+  if (prefs.sidebar !== false) elements.push('#related', '#secondary');
+  if (prefs.comments !== false) elements.push('ytd-comments');
+  if (prefs.shorts !== false) elements.push('ytd-shorts-section-renderer');
+  if (prefs.chips !== false) elements.push('#chips-wrapper');
+  if (prefs.homepage !== false) elements.push('ytd-rich-grid-renderer');
+  if (prefs.autoplay === true) elements.push('.ytp-autonav-toggle-button');
+
+  function hideElements() {
+    elements.forEach(selector => {
+      document.querySelectorAll(selector).forEach(el => {
+        el.style.display = 'none';
+      });
     });
-  });
-}
-
-// Only apply if user has focus mode enabled
-chrome.storage.sync.get(['enabled'], (result) => {
-  if (result.enabled !== false) {
-    hideElements();
-    const observer = new MutationObserver(hideElements);
-    observer.observe(document.body, { childList: true, subtree: true });
   }
+
+  hideElements();
+
+  const observer = new MutationObserver(hideElements);
+  observer.observe(document.body, { childList: true, subtree: true });
 });

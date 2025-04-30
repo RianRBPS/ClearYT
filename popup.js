@@ -1,11 +1,15 @@
-// Load saved toggle state
-document.addEventListener('DOMContentLoaded', () => {
-  chrome.storage.sync.get(['enabled'], (result) => {
-    document.getElementById('toggle').checked = result.enabled !== false; // default true
-  });
-});
+const options = ['enabled', 'sidebar', 'comments', 'shorts', 'chips', 'autoplay', 'homepage'];
 
-// Save toggle state on change
-document.getElementById('toggle').addEventListener('change', (e) => {
-  chrome.storage.sync.set({ enabled: e.target.checked });
+document.addEventListener('DOMContentLoaded', () => {
+  chrome.storage.sync.get(options, (result) => {
+    options.forEach(key => {
+      document.getElementById(key).checked = result[key] !== false;
+    });
+  });
+
+  options.forEach(key => {
+    document.getElementById(key).addEventListener('change', (e) => {
+      chrome.storage.sync.set({ [key]: e.target.checked });
+    });
+  });
 });
