@@ -7,22 +7,30 @@
       background-color: #121212;
       color: #e0e0e0;
       font-family: 'Segoe UI', sans-serif;
-      padding: 15px;
-      width: 240px;
+      padding: 16px;
+      width: 260px;
     }
 
-    h3 {
+    h2 {
       color: #a855f7;
       margin-top: 0;
-      font-size: 16px;
+      font-size: 18px;
       text-align: center;
+    }
+
+    h4 {
+      color: #cccccc;
+      font-size: 14px;
+      margin: 16px 0 8px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 4px;
     }
 
     label {
       display: flex;
       align-items: center;
-      margin: 8px 0;
-      font-size: 14px;
+      margin: 6px 0;
+      font-size: 13px;
       padding: 6px;
       border-radius: 6px;
       transition: background-color 0.2s ease;
@@ -39,28 +47,36 @@
       margin-right: 10px;
     }
 
-    hr {
-      border: 0;
-      border-top: 1px solid #333;
-      margin: 10px 0;
+    .group {
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <h3>ClearYT</h3>
+  <h2>ClearYT</h2>
 
-  <label><input type="checkbox" id="enabled"> Enable Focus Mode</label>
-  <hr />
-  <label><input type="checkbox" id="sidebar"> Hide Sidebar</label>
-  <label><input type="checkbox" id="comments"> Hide Comments</label>
-  <label><input type="checkbox" id="shorts"> Hide Shorts</label>
-  <label><input type="checkbox" id="chips"> Hide Topic Chips</label>
-  <label><input type="checkbox" id="autoplay"> Hide Autoplay Button</label>
-  <label><input type="checkbox" id="homepage"> Hide Homepage Grid</label>
-  <label><input type="checkbox" id="leftmenu"> Hide Left Menu</label>
-  <label><input type="checkbox" id="notifBell"> Hide Notification Bell</label>
-  <hr />
+  <label><input type="checkbox" id="focusAll"> Enable Focus Mode (All)</label>
   <label><input type="checkbox" id="ytDarkMode"> Force YouTube Dark Theme</label>
+
+  <div class="group">
+    <h4>Video Page</h4>
+    <label><input type="checkbox" class="individual-toggle" id="sidebar"> Hide Sidebar</label>
+    <label><input type="checkbox" class="individual-toggle" id="comments"> Hide Comments</label>
+    <label><input type="checkbox" class="individual-toggle" id="autoplay"> Hide Autoplay Button</label>
+    <label><input type="checkbox" class="individual-toggle" id="notifBell"> Hide Notification Bell</label>
+  </div>
+
+  <div class="group">
+    <h4>Homepage</h4>
+    <label><input type="checkbox" class="individual-toggle" id="homepage"> Hide Homepage Grid</label>
+    <label><input type="checkbox" class="individual-toggle" id="chips"> Hide Topic Chips</label>
+  </div>
+
+  <div class="group">
+    <h4>General</h4>
+    <label><input type="checkbox" class="individual-toggle" id="shorts"> Hide Shorts</label>
+    <label><input type="checkbox" class="individual-toggle" id="leftmenu"> Hide Left Menu</label>
+  </div>
 
   <script src="popup.js"></script>
 </body>

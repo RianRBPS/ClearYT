@@ -1,18 +1,8 @@
 function applyClearYT(prefs) {
-  if (prefs.enabled === false) return;
-
-  if (prefs.ytDarkMode === true) {
-    document.documentElement.setAttribute('dark', 'true');
-    document.documentElement.style.backgroundColor = '#0f0f0f';
-  }  
-
-  const elements = [];
-
-  if (prefs.sidebar !== false) elements.push('#related', '#secondary');
-  if (prefs.comments !== false) elements.push('ytd-comments');
-
-  if (prefs.shorts !== false) {
-    elements.push(
+  const allSelectors = {
+    sidebar: ['#related', '#secondary'],
+    comments: ['ytd-comments'],
+    shorts: [
       'ytd-shorts-section-renderer',
       'ytd-reel-shelf-renderer',
       'ytd-rich-section-renderer',
@@ -22,64 +12,144 @@ function applyClearYT(prefs) {
       'ytd-reel-item-renderer',
       'a[title="Shorts"]',
       'ytd-guide-entry-renderer a[href="/shorts"]'
-    );
-  }
-
-  if (prefs.chips !== false) elements.push('#chips-wrapper');
-  if (prefs.homepage !== false) {
-    elements.push('ytd-rich-grid-renderer');
-
-    // Center the search bar when homepage grid is hidden
-    const searchContainer = document.querySelector('#center');
-    if (searchContainer) {
-      searchContainer.style.margin = 'auto';
-      searchContainer.style.justifyContent = 'center';
-      searchContainer.style.display = 'flex';
-    }
-  }
-
-  if (prefs.notifBell !== false) {
-    elements.push('ytd-notification-topbar-button-renderer');
-  }
-
-  if (prefs.autoplay === true) {
-    elements.push('.ytp-autonav-toggle-button');
-  }
-
-  if (prefs.leftmenu !== false) {
-    elements.push(
+    ],
+    chips: ['#chips-wrapper'],
+    notifBell: ['ytd-notification-topbar-button-renderer'],
+    autoplay: ['.ytp-autonav-toggle-button'],
+    leftmenu: [
       '#guide-content',
       '#guide-wrapper',
       'ytd-mini-guide-renderer',
       '#guide',
       'tp-yt-app-drawer'
-    );
-  }
+    ]
+  };
 
-  function hideElements() {
-    elements.forEach(selector => {
-      document.querySelectorAll(selector).forEach(el => {
-        el.style.display = 'none';
-        console.log(`[ClearYT] Hid: ${selector}`);
-      });
+  // Reset styles
+  Object.values(allSelectors).flat().forEach(selector => {
+    document.querySelectorAll(selector).forEach(el => {
+      el.style.display = '';
+    });
+  });
+
+  const homepageGrid = document.querySelector('ytd-rich-grid-renderer');
+  if (homepageGrid) {
+    homepageGrid.querySelectorAll('ytd-rich-item-renderer').forEach(el => {
+      el.style.display = '';
     });
   }
 
-  hideElements();
+  const elementsToHide = [];
+  const shouldApply = (key) => prefs.focusAll === true || prefs[key] === true;
 
-  const observer = new MutationObserver(hideElements);
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
+  if (shouldApply('sidebar')) elementsToHide.push(...allSelectors.sidebar);
+  if (shouldApply('comments')) elementsToHide.push(...allSelectors.comments);
+  if (shouldApply('shorts')) elementsToHide.push(...allSelectors.shorts);
+  if (shouldApply('chips')) elementsToHide.push(...allSelectors.chips);
+  if (shouldApply('notifBell')) elementsToHide.push(...allSelectors.notifBell);
+  if (shouldApply('autoplay')) elementsToHide.push(...allSelectors.autoplay);
+  if (shouldApply('leftmenu')) elementsToHide.push(...allSelectors.leftmenu);
+
+  if (shouldApply('homepage')) {
+    hideHomepageTilesOnly();
+  }
+
+  elementsToHide.forEach(selector => {
+    document.querySelectorAll(selector).forEach(el => {
+      el.style.display = 'none';
+    });
   });
+
+  if (prefs.ytDarkMode === true) {
+    try {
+      localStorage.setItem('yt-dark-theme', 'true');
+      localStorage.setItem('yt-user-theme', 'dark');
+      localStorage.setItem('yt-player-theme', 'dark');
+      localStorage.setItem('PREF', 'f6=400');
+
+      document.documentElement.setAttribute('dark', 'true');
+      document.documentElement.classList.add('dark');
+
+      // Fix notification bell & create icon visibility
+      const bell = document.querySelector('ytd-notification-topbar-button-renderer');
+      const create = document.querySelector('ytd-topbar-menu-button-renderer');
+      [bell, create].forEach(el => {
+        if (el) el.style.filter = 'invert(1)';
+      });
+    } catch (e) {
+      console.warn('[ClearYT] Could not set dark mode:', e);
+    }
+  }
 }
 
-// Initial execution
+function hideHomepageTilesOnly() {
+  const homepageGrid = document.querySelector('ytd-rich-grid-renderer');
+  if (homepageGrid) {
+    homepageGrid.querySelectorAll('ytd-rich-item-renderer').forEach(el => {
+      el.style.display = 'none';
+    });
+  }
+
+  const searchContainer = document.querySelector('#center');
+  if (searchContainer) {
+    searchContainer.style.margin = 'auto';
+    searchContainer.style.justifyContent = 'center';
+    searchContainer.style.display = 'flex';
+  }
+}
+
+// Initial application
 chrome.storage.sync.get(null, applyClearYT);
 
-// Listen for real-time updates from popup.js
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+// Respond to popup.js trigger
+chrome.runtime.onMessage.addListener((message) => {
   if (message.action === 'refreshClearYT') {
     chrome.storage.sync.get(null, applyClearYT);
   }
 });
+
+// Debounce utility
+function debounce(fn, delay = 150) {
+  let timeout;
+  return () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(fn, delay);
+  };
+}
+
+// Efficient MutationObserver for all features except homepage grid
+const generalObserver = new MutationObserver(
+  debounce(() => {
+    chrome.storage.sync.get(null, applyClearYT);
+  }, 150)
+);
+
+generalObserver.observe(document.body, {
+  childList: true,
+  subtree: true
+});
+
+// Dedicated aggressive observer for homepage grid
+const observeHomepageTiles = new MutationObserver(
+  debounce(() => {
+    chrome.storage.sync.get(['homepage', 'focusAll'], (prefs) => {
+      if (prefs.focusAll === true || prefs.homepage === true) {
+        hideHomepageTilesOnly();
+      }
+    });
+  }, 150)
+);
+
+function watchHomepageTileChanges() {
+  const grid = document.querySelector('ytd-rich-grid-renderer');
+  if (grid) {
+    observeHomepageTiles.observe(grid, {
+      childList: true,
+      subtree: true
+    });
+  } else {
+    setTimeout(watchHomepageTileChanges, 500);
+  }
+}
+
+watchHomepageTileChanges();
