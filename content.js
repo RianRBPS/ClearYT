@@ -106,7 +106,6 @@ chrome.runtime.onMessage.addListener((message) => {
   }
 });
 
-// Debounce utility
 function debounce(fn, delay = 150) {
   let timeout;
   return () => {
@@ -115,7 +114,7 @@ function debounce(fn, delay = 150) {
   };
 }
 
-// Monitor DOM mutations
+// MutationObserver for general elements
 const generalObserver = new MutationObserver(
   debounce(() => {
     chrome.storage.sync.get(null, applyClearYT);
@@ -126,16 +125,20 @@ generalObserver.observe(document.body, {
   subtree: true
 });
 
-// Dedicated observer for homepage grid
-const observeHomepageTiles = new MutationObserver(
-  debounce(() => {
-    chrome.storage.sync.get(['homepage', 'focusAll'], (prefs) => {
-      if (prefs.focusAll === true || prefs.homepage === true) {
-        hideHomepageTilesOnly();
+// Dedicated homepage tile observer
+const observeHomepageTiles = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    mutation.addedNodes.forEach(node => {
+      if (
+        node.nodeType === 1 &&
+        node.tagName === 'YTD-RICH-ITEM-RENDERER'
+      ) {
+        node.style.display = 'none';
       }
     });
-  }, 150)
-);
+  }
+});
+
 
 function watchHomepageTileChanges() {
   const grid = document.querySelector('ytd-rich-grid-renderer');
@@ -144,6 +147,8 @@ function watchHomepageTileChanges() {
       childList: true,
       subtree: true
     });
+    // Kickstart initial hiding for a snappy feel
+    hideHomepageTilesOnly();
   } else {
     setTimeout(watchHomepageTileChanges, 500);
   }
@@ -151,7 +156,7 @@ function watchHomepageTileChanges() {
 
 watchHomepageTileChanges();
 
-// Watch for YouTube SPA navigation via URL changes
+// Watch for YouTube SPA URL changes
 let lastUrl = location.href;
 setInterval(() => {
   if (location.href !== lastUrl) {
