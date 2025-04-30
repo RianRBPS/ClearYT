@@ -3,7 +3,7 @@ let prevCustomState = {};
 
 const options = [
   'sidebar', 'comments', 'shorts',
-  'chips', 'autoplay', 'homepage', 'notifBell',
+  'chips','homepage', 'notifBell',
   'leftmenu', 'ytDarkMode'
 ];
 

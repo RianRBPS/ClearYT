@@ -15,7 +15,6 @@ function applyClearYT(prefs) {
     ],
     chips: ['#chips-wrapper'],
     notifBell: ['ytd-notification-topbar-button-renderer'],
-    autoplay: ['.ytp-autonav-toggle-button'],
     leftmenu: [
       '#guide-content',
       '#guide-wrapper',
@@ -46,7 +45,6 @@ function applyClearYT(prefs) {
   if (shouldApply('shorts')) elementsToHide.push(...allSelectors.shorts);
   if (shouldApply('chips')) elementsToHide.push(...allSelectors.chips);
   if (shouldApply('notifBell')) elementsToHide.push(...allSelectors.notifBell);
-  if (shouldApply('autoplay')) elementsToHide.push(...allSelectors.autoplay);
   if (shouldApply('leftmenu')) elementsToHide.push(...allSelectors.leftmenu);
 
   if (shouldApply('homepage')) {
