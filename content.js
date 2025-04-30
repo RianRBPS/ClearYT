@@ -25,7 +25,6 @@ function applyClearYT(prefs) {
     ]
   };
 
-  // Reset styles
   Object.values(allSelectors).flat().forEach(selector => {
     document.querySelectorAll(selector).forEach(el => {
       el.style.display = '';
@@ -70,7 +69,6 @@ function applyClearYT(prefs) {
       document.documentElement.setAttribute('dark', 'true');
       document.documentElement.classList.add('dark');
 
-      // Fix notification bell & create icon visibility
       const bell = document.querySelector('ytd-notification-topbar-button-renderer');
       const create = document.querySelector('ytd-topbar-menu-button-renderer');
       [bell, create].forEach(el => {
@@ -109,7 +107,7 @@ chrome.runtime.onMessage.addListener((message) => {
 });
 
 // Debounce utility
-function debounce(fn, delay = 0) {
+function debounce(fn, delay = 150) {
   let timeout;
   return () => {
     clearTimeout(timeout);
@@ -117,19 +115,18 @@ function debounce(fn, delay = 0) {
   };
 }
 
-// Efficient MutationObserver for all features except homepage grid
+// Monitor DOM mutations
 const generalObserver = new MutationObserver(
   debounce(() => {
     chrome.storage.sync.get(null, applyClearYT);
   }, 150)
 );
-
 generalObserver.observe(document.body, {
   childList: true,
   subtree: true
 });
 
-// Dedicated aggressive observer for homepage grid
+// Dedicated observer for homepage grid
 const observeHomepageTiles = new MutationObserver(
   debounce(() => {
     chrome.storage.sync.get(['homepage', 'focusAll'], (prefs) => {
@@ -153,3 +150,12 @@ function watchHomepageTileChanges() {
 }
 
 watchHomepageTileChanges();
+
+// Watch for YouTube SPA navigation via URL changes
+let lastUrl = location.href;
+setInterval(() => {
+  if (location.href !== lastUrl) {
+    lastUrl = location.href;
+    chrome.storage.sync.get(null, applyClearYT);
+  }
+}, 500);
