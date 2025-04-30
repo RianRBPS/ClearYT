@@ -3,8 +3,10 @@ let prevOptionsState = {};       // Memory for all other options
 
 const options = [
   'enabled', 'sidebar', 'comments', 'shorts',
-  'chips', 'autoplay', 'homepage', 'notifBell', 'leftmenu'
+  'chips', 'autoplay', 'homepage', 'notifBell',
+  'leftmenu', 'ytDarkMode' 
 ];
+
 
 const otherOptions = options.filter(opt => opt !== 'enabled');
 

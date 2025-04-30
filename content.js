@@ -1,6 +1,11 @@
 function applyClearYT(prefs) {
   if (prefs.enabled === false) return;
 
+  if (prefs.ytDarkMode === true) {
+    document.documentElement.setAttribute('dark', 'true');
+    document.documentElement.style.backgroundColor = '#0f0f0f';
+  }  
+
   const elements = [];
 
   if (prefs.sidebar !== false) elements.push('#related', '#secondary');
