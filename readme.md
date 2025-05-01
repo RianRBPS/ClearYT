@@ -2,7 +2,7 @@
 
 **ClearYT** is a Chrome browser extension designed to eliminate distractions from YouTube, making it easier to stay focused while studying or working.
 
-![ClearYT Demo](promoart)
+![ClearYT Demo](promoart.png)
 
 ---
 
