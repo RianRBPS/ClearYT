@@ -58,24 +58,23 @@ function applyClearYT(prefs) {
   });
 
   if (prefs.ytDarkMode === true) {
-    try {
-      localStorage.setItem('yt-dark-theme', 'true');
-      localStorage.setItem('yt-user-theme', 'dark');
-      localStorage.setItem('yt-player-theme', 'dark');
-      localStorage.setItem('PREF', 'f6=400');
-
-      document.documentElement.setAttribute('dark', 'true');
-      document.documentElement.classList.add('dark');
-
-      const bell = document.querySelector('ytd-notification-topbar-button-renderer');
-      const create = document.querySelector('ytd-topbar-menu-button-renderer');
-      [bell, create].forEach(el => {
-        if (el) el.style.filter = 'invert(1)';
-      });
-    } catch (e) {
-      console.warn('[ClearYT] Could not set dark mode:', e);
-    }
+    localStorage.setItem('yt-dark-theme', 'true');
+    localStorage.setItem('yt-user-theme', 'dark');
+    localStorage.setItem('yt-player-theme', 'dark');
+    localStorage.setItem('PREF', 'f6=400');
+  
+    document.documentElement.setAttribute('dark', 'true');
+    document.documentElement.classList.add('dark');
+  } else {
+    localStorage.setItem('yt-dark-theme', 'false');
+    localStorage.setItem('yt-user-theme', 'light');
+    localStorage.setItem('yt-player-theme', 'light');
+    localStorage.setItem('PREF', 'f6=100');
+  
+    document.documentElement.removeAttribute('dark');
+    document.documentElement.classList.remove('dark');
   }
+  
 }
 
 function hideHomepageTilesOnly() {

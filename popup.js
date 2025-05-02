@@ -42,13 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
   darkToggle.addEventListener('change', (e) => {
     const value = e.target.checked;
     chrome.storage.sync.set({ ytDarkMode: value });
-
+  
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (value) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: 'refreshClearYT' });
-      } else {
-        chrome.tabs.reload(tabs[0].id);
-      }
+      chrome.tabs.sendMessage(tabs[0].id, { action: 'refreshClearYT' });
     });
-  });
+  });  
 });

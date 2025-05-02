@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ClearYT - Focus Mode for YouTube",
   "description": "Hide distracting elements from YouTube while studying.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "permissions": ["storage"],
   "host_permissions": ["*://www.youtube.com/*"],
   "content_scripts": [
