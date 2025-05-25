@@ -5,6 +5,9 @@
   "version": "1.0.2",
   "permissions": ["storage"],
   "host_permissions": ["*://www.youtube.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": ["*://www.youtube.com/*"],

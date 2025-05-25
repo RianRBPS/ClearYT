@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   chrome.storage.sync.get(options, (result) => {
     options.forEach(key => {
       const checkbox = document.getElementById(key);
-      checkbox.checked = result[key] !== false;
+      checkbox.checked = Boolean(result[key]); // wont treat undefined as true accidentally
     });
 
     prevCustomState = { ...result };
